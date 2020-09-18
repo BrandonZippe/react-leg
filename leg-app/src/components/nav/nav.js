@@ -1,13 +1,21 @@
 import React from 'react';
 import './nav.scss';
 
+function NavItem(props) {
+  return (
+    <div id={props.id} className={props.isOn}>{props.text}</div>
+  );
+}
+
 function Nav() {
   return (
     <nav>
-      <div id="allTime" onClick="">All Time Members</div>
-      <div id="current" className="on" onClick="">Current Members</div>
+      <NavItem id="allTime" isOn="" text="All Time Members" />
+      <NavItem id="current" isOn="on" text="Current Members" />
     </nav>
   );
 }
+
+
 
 export default Nav;
