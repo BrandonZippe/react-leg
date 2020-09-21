@@ -1,7 +1,19 @@
 import React from 'react';
 import './tile.scss';
 
-function Tile(props) {
+class Tile extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state =  {
+      error: null,
+      isLoaded: false,
+      data: []
+    }
+  };
+
+  componentDidMount() {
+
+  }
 
 }
 
