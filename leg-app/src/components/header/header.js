@@ -1,7 +1,6 @@
 import React from 'react';
 import './header.scss';
 import logo from '../../assets/leg-logo.png';
-import Nav from '../nav/nav';
 
 function Header() {
   const firstYear = 2012;
@@ -21,7 +20,6 @@ function Header() {
         OF RECORD
         <span className="fancy">{tagline}</span>
       </h1>
-      <Nav />
     </header>
   );
 }

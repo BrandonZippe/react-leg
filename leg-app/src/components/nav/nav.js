@@ -13,6 +13,10 @@ class Nav extends React.Component {
     this.state = {
       allInActive: false,
       currentActive: false,
+      error: null,
+      isLoaded: false,
+      data: [],
+      members: [],
     };
     this.handleAllInClick = this.handleAllInClick.bind(this);
     this.handleCurrentClick = this.handleCurrentClick.bind(this);
@@ -42,7 +46,7 @@ class Nav extends React.Component {
   render () {
     const { allInActive, currentActive } = this.state;
     return (
-      <nav>
+      <nav className="mainNav">
         <NavItem id="allTime" isOn={allInActive ? 'on' : null} text="All Time Members" onClick={this.handleAllInClick} />
         <NavItem id="current" isOn={!currentActive ? 'on' : null} text="Current Members" onClick={this.handleCurrentClick} />
       </nav>

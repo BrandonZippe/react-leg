@@ -1,17 +1,13 @@
 import React from 'react';
 import './App.scss';
 import Header from './components/header/header';
-import Sorts from './components/sorts/sorts';
+import Main from './components/main/main';
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <main>
-
-      <Sorts />
-
-      </main>
+      <Main />
     </div>
   );
 }
