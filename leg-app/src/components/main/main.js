@@ -28,8 +28,17 @@ class Main extends React.Component {
     const leagueDataPath = 'https://fantasy.espn.com/apis/v3/games/ffl/leagueHistory/628822?view=mLiveScoring&view=mMatchupScore&view=mStandings&view=mStatus&view=mTeam';
     const response = await fetch(leagueDataPath);
     const json = await response.json();
+    function compare(a, b) {
+        if (a.seasonId < b.seasonId) {
+            return -1;
+        }
+        if (a.seasonId > b.seasonId) {
+            return 1;
+        }
+        return 0;
+    }
+    json.sort(compare);
     this.setState({ data: json });
-    // console.log(this.state.data);
     this.parseMembers(json);
   }
 
@@ -42,24 +51,25 @@ class Main extends React.Component {
       for (const obj of members) {
         const fn = obj.firstName;
         const ln = obj.lastName;
+        const id = obj.id;
         const owner = fn + '_' + ln;
 
-        let filteredOwner = this.state.atMembers.filter(member => member !== owner && member !== 'Chris_Castillo');
+        let filteredOwner = this.state.atMembers.filter(member => member['owner'] !== owner && member['owner'] !== 'Chris_Castillo');
 
         this.setState({
-          atMembers: [...filteredOwner, owner]
+          atMembers: [...filteredOwner, {owner, id}]
         });
 
         if (i === lastSeason) {
-          let filteredOwner = this.state.curMembers.filter(member => member !== owner && member !== 'Chris_Castillo');
+          let filteredOwner = this.state.curMembers.filter(member => member['owner'] !== owner && member['owner'] !== 'Chris_Castillo');
 
           this.setState({
-            curMembers: [...filteredOwner, owner]
+            curMembers: [...filteredOwner, {owner, id}]
           });
         }
-
       }
     }
+    console.log(this.state.atMembers);
   }
 
   handleAllClick() {
@@ -95,7 +105,7 @@ class Main extends React.Component {
       </nav>
         <Sorts />
         <article className="contentBox">
-          <Tiles members={memberArr} />
+          <Tiles members={memberArr} data={this.state.data} />
         </article>
       </main>
     )
