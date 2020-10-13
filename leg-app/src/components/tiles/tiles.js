@@ -16,7 +16,7 @@ function Tiles(props) {
   <TileContent
     key={member['owner']}
     name={member['owner'].replace('_', ' ')}
-    id={member['id']}
+    id={member['teamId']}
   />
   );
   return memberNames;

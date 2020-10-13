@@ -39,37 +39,56 @@ class Main extends React.Component {
     }
     json.sort(compare);
     this.setState({ data: json });
-    this.parseMembers(json);
+    this.parseData(json);
   }
 
-  parseMembers(data) {
+  parseData(data) {
+    const chadId = 122;
+    const washId = 33;
+
     for (let i = 0; i < data.length; i++){
       const d = data[i];
       const members = d.members;
+      const teams = d.teams;
+      const year = d.seasonId;
       const lastSeason = data.length - 1;
 
-      for (const obj of members) {
-        const fn = obj.firstName;
-        const ln = obj.lastName;
-        const id = obj.id;
-        const owner = fn + '_' + ln;
+      for (const team of teams) {
+        let teamId = team.primaryOwner;
+        const teamName = team.location + ' ' + team.nickname;
+        const record = team.record;
+        const logo = team.logo;
+        const transactions = team.transactionCounter;
+        let owner;
+
+        for (const obj of members) {
+          const id = obj.id;
+          if (id === teamId) {
+            const fn = obj.firstName;
+            const ln = obj.lastName;
+                  owner = fn + '_' + ln;
+          }
+        }
+
 
         let filteredOwner = this.state.atMembers.filter(member => member['owner'] !== owner && member['owner'] !== 'Chris_Castillo');
+        const ownerObj = {year, teamId, owner, record, teamName, logo, transactions};
 
         this.setState({
-          atMembers: [...filteredOwner, {owner, id}]
+          atMembers: [...filteredOwner, ownerObj]
         });
 
         if (i === lastSeason) {
           let filteredOwner = this.state.curMembers.filter(member => member['owner'] !== owner && member['owner'] !== 'Chris_Castillo');
 
           this.setState({
-            curMembers: [...filteredOwner, {owner, id}]
+            curMembers: [...filteredOwner, ownerObj]
           });
         }
       }
     }
     console.log(this.state.atMembers);
+    console.log(this.state.curMembers);
   }
 
   handleAllClick() {
