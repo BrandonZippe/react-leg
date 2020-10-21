@@ -43,9 +43,8 @@ class Main extends React.Component {
   }
 
   parseData(data) {
-    const chadId = 122;
-    const washId = 33;
 
+    console.log(data);
     for (let i = 0; i < data.length; i++){
       const d = data[i];
       const members = d.members;
